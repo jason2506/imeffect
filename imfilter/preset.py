@@ -23,17 +23,8 @@ __all__ = ('Vintage',
            'Hemingway',
            'Concentrate')
 
-_register = FilterPool().register
+_P = FilterPool().register_as_layer
 _L = FilterLayer
-
-
-def _P(*args, **kwargs):
-    proxy = _register(*args, **kwargs)
-
-    def wrapper(img, origin_img):
-        return proxy(img)
-
-    return wrapper
 
 
 class Vintage(LayeredFilter):

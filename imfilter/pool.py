@@ -37,3 +37,11 @@ class FilterPool(object):
             self._proxies[key] = FilterProxy(cls, args, kwargs)
 
         return self._proxies[key]
+
+    def register_as_layer(self, cls, *args, **kwargs):
+        proxy = self.register(cls, *args, **kwargs)
+
+        def wrapper(img, origin_img):
+            return proxy(img)
+
+        return wrapper
