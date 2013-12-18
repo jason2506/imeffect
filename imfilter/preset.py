@@ -38,7 +38,10 @@ class Vintage(LayeredFilter):
                _P(basic.Vignette, 40, 30))
 
     def __init__(self, vignette=True):
-        self._layers = self._LAYERS if vignette else self._LAYERS[:-1]
+        if vignette:
+            self._layers = self._LAYERS
+        else:
+            self._layers = self._LAYERS[:-1]
 
 
 class Lomo(LayeredFilter):
@@ -87,6 +90,7 @@ class SinCity(LayeredFilter):
 
 
 class Sunrise(LayeredFilter):
+
     _LAYERS = (_P(basic.Exposure, 3.5),
                _P(basic.Saturation, -5),
                _P(basic.Vibrance, 50),
@@ -191,7 +195,10 @@ class GlowingSun(LayeredFilter):
                _P(basic.Vignette, 45, 20))
 
     def __init__(self, vignette=True):
-        self._layers = self._LAYERS if vignette else self._LAYERS[:-1]
+        if vignette:
+            self._layers = self._LAYERS
+        else:
+            self._layers = self._LAYERS[:-1]
 
 
 class HazyDays(LayeredFilter):
