@@ -56,3 +56,11 @@ cpdef bezier(np.ndarray[np.int_t, ndim=2] cps, int lower=0, int upper=255):
 
     end = cps[-1][0]
     return _fill_missing_values(result, end)
+
+
+cpdef choose(np.ndarray a, np.ndarray choices, np.ndarray out):
+    cdef int idx, val
+    for idx, val in enumerate(choices):
+        out[a == idx] = val
+
+    return out

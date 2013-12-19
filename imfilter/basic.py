@@ -7,7 +7,7 @@ from scipy.signal import convolve2d
 from skimage.color import rgb2hsv, hsv2rgb
 
 from .base import BasicFilter
-from ._util import bezier
+from ._util import bezier, choose
 
 __all__ = ('FillColor',
            'Brightness',
@@ -226,10 +226,8 @@ class Curves(BasicFilter):
         for c in self._chans:
             channel = img[:, :, c]
             channel_idx = idx[:, :, c]
-            for v in xrange(256):
-                channel[channel_idx == v] = curve[v] / 255.0
-
-            img[:, :, c] = channel
+            choose(channel_idx, curve, channel)
+            img[:, :, c] = channel / 255.0
 
         return img
 
@@ -288,8 +286,7 @@ class Vignette(BasicFilter):
         idx = np.round((d[b] - end) / size * 100).astype(np.int)
 
         p = np.zeros(idx.shape, dtype=np.float)
-        for i in xrange(101):
-            p[idx == i] = Vignette._curve[i]
+        choose(idx, Vignette._curve, p)
 
         p *= 0.1 * self._strength
         p[p < 1] = 1.0
