@@ -28,7 +28,7 @@ setup(
     install_requires=['scikit-image', 'scipy', 'numpy'],
     cmdclass={'build_ext': build_ext},
     ext_modules=[
-        Extension('imfilter._bezier', ['imfilter/_bezier.pyx'],
+        Extension('imfilter._util', ['imfilter/_util.pyx'],
                   include_dirs=[numpy.get_include()])],
     classifiers=[
         'Intended Audience :: Developers',

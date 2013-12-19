@@ -34,14 +34,14 @@ cdef _fill_missing_values(dict values, int end):
     return result.astype(np.int)
 
 
-cpdef _bezier(np.ndarray[np.int_t, ndim=2] cps, int lower=0, int upper=255):
-    cdef dict bezier
+cpdef bezier(np.ndarray[np.int_t, ndim=2] cps, int lower=0, int upper=255):
+    cdef dict result
     cdef unsigned int i, j, k
     cdef double t, val
     cdef int idx, end
     cdef np.ndarray[np.int_t, ndim=2] p
 
-    bezier = {}
+    result = {}
     for i in xrange(1000):
         t = i * 0.001
         p = np.copy(cps)
@@ -52,7 +52,7 @@ cpdef _bezier(np.ndarray[np.int_t, ndim=2] cps, int lower=0, int upper=255):
 
         idx = int(round(p[0, 0]))
         val = min(max(p[0, 1], lower), upper)
-        bezier[idx] = round(val)
+        result[idx] = round(val)
 
     end = cps[-1][0]
-    return _fill_missing_values(bezier, end)
+    return _fill_missing_values(result, end)

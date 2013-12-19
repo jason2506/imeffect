@@ -7,7 +7,7 @@ from scipy.signal import convolve2d
 from skimage.color import rgb2hsv, hsv2rgb
 
 from .base import BasicFilter
-from ._bezier import _bezier
+from ._util import bezier
 
 __all__ = ('FillColor',
            'Brightness',
@@ -210,24 +210,24 @@ class Curves(BasicFilter):
 
     def _get_bezier(self):
         if self._curve is None:
-            bezier = _bezier(self._cps, 0, 255)
+            curve = bezier(self._cps, 0, 255)
 
             start = self._cps[0]
-            bezier[:start[0]] = start[1]
+            curve[:start[0]] = start[1]
 
             end = self._cps[-1]
-            self._curve = np.concatenate((bezier, [end[1]] * (255 - end[0])))
+            self._curve = np.concatenate((curve, [end[1]] * (255 - end[0])))
 
         return self._curve
 
     def _process(self, img):
-        bezier = self._get_bezier()
+        curve = self._get_bezier()
         idx = np.around(img * 255)
         for c in self._chans:
             channel = img[:, :, c]
             channel_idx = idx[:, :, c]
             for v in xrange(256):
-                channel[channel_idx == v] = bezier[v] / 255.0
+                channel[channel_idx == v] = curve[v] / 255.0
 
             img[:, :, c] = channel
 
@@ -269,7 +269,7 @@ class Vignette(BasicFilter):
         self._strength = strength * 0.01
         if Vignette._curve is None:
             cps = np.array(((0, 1), (30, 30), (70, 60), (100, 80)))
-            Vignette._curve = _bezier(cps)
+            Vignette._curve = bezier(cps)
 
     def _process(self, img):
         h, w, d = img.shape
