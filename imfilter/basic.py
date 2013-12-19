@@ -312,27 +312,30 @@ class Vignette(BasicFilter):
         self._scale = scale * 0.01
         self._strength = strength * 0.01
         if Vignette._curve is None:
-            cps = np.array(((0, 1), (30, 30), (70, 60), (100, 80)), dtype=np.int32)
+            cps = np.array(((0, 1), (30, 30), (70, 60), (100, 80)))
             Vignette._curve = _bezier(cps)
 
     def _process(self, img):
-        shape = img.shape
-        size = min(shape[0], shape[1]) * self._scale
-        center = ((shape[0] + 1) / 2, (shape[1] + 1) / 2)
+        h, w, d = img.shape
+        size = min(h, w) * self._scale
+        center = (h * 0.5, w * 0.5)
         start = norm(center)
         end = start - size
 
-        p = np.zeros((shape[0], shape[1]), dtype=np.float)
-        b = np.zeros((shape[0], shape[1]), dtype=np.bool)
-        for i in xrange(shape[0]):
-            for j in xrange(shape[1]):
-                dist = norm((i - center[0], j - center[1]))
-                if dist > end:
-                    idx = round((dist - end) / size * 100)
-                    p[i, j] = Vignette._curve[idx]
-                    b[i, j] = True
+        dx = np.array(range(h)).reshape((h, 1)) - center[0]
+        dy = np.array(range(w)).reshape((1, w)) - center[1]
+        dx = np.tile(dx, (1, w))
+        dy = np.tile(dy, (h, 1))
+        d = np.sqrt(dx ** 2 + dy ** 2)
 
-        p = p[b] * 0.1 * self._strength
+        b = d > end
+        idx = np.round((d[b] - end) / size * 100).astype(np.int32)
+
+        p = np.zeros(idx.shape, dtype=np.float)
+        for i in xrange(101):
+            p[idx == i] = Vignette._curve[i]
+
+        p *= 0.1 * self._strength
         p[p < 1] = 1.0
         for i in xrange(3):
             channel = img[:, :, i]
