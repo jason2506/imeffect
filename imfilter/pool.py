@@ -2,8 +2,7 @@
 
 from itertools import chain
 
-__all__ = ('FilterProxy',
-           'FilterPool')
+__all__ = ('FilterPool')
 
 
 def _convert(*args, **kwargs):
@@ -11,37 +10,22 @@ def _convert(*args, **kwargs):
     return frozenset(c)
 
 
-class FilterProxy(object):
-
-    def __init__(self, cls, args, kwargs):
-        self._cls = cls
-        self._args = args
-        self._kwargs = kwargs
-        self._instance = None
-
-    def __call__(self, img):
-        if self._instance is None:
-            self._instance = self._cls(*self._args, **self._kwargs)
-
-        return self._instance(img)
-
-
 class FilterPool(object):
 
     def __init__(self):
-        self._proxies = {}
+        self._filters = {}
 
     def register(self, cls, *args, **kwargs):
         key = _convert(cls, *args, **kwargs)
-        if key not in self._proxies:
-            self._proxies[key] = FilterProxy(cls, args, kwargs)
+        if key not in self._filters:
+            self._filters[key] = cls(*args, **kwargs)
 
-        return self._proxies[key]
+        return self._filters[key]
 
     def register_as_layer(self, cls, *args, **kwargs):
-        proxy = self.register(cls, *args, **kwargs)
+        f = self.register(cls, *args, **kwargs)
 
         def wrapper(img, origin_img):
-            return proxy(img)
+            return f(img)
 
         return wrapper

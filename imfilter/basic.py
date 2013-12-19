@@ -248,20 +248,24 @@ class Channels(BasicFilter):
 class Curves(BasicFilter):
 
     def __init__(self, chans, cps):
-        cps = np.array(cps, dtype=np.int32)
-        bezier = _bezier(cps, 0, 255)
-
-        start = cps[0]
-        bezier[:start[0]] = start[1]
-
-        end = cps[-1]
-        bezier = np.concatenate((bezier, [end[1]] * (255 - end[0])))
-
         self._chans = chans
-        self._curve = bezier
+        self._cps = np.array(cps, dtype=np.int32)
+        self._curve = None
+
+    def _get_bezier(self):
+        if self._curve is None:
+            bezier = _bezier(self._cps, 0, 255)
+
+            start = self._cps[0]
+            bezier[:start[0]] = start[1]
+
+            end = self._cps[-1]
+            self._curve = np.concatenate((bezier, [end[1]] * (255 - end[0])))
+
+        return self._curve
 
     def _process(self, img):
-        bezier = self._curve
+        bezier = self._get_bezier()
         idx = np.around(img * 255)
         for c in self._chans:
             channel = img[:, :, c]
@@ -302,11 +306,14 @@ class Posterize(BasicFilter):
 
 class Vignette(BasicFilter):
 
+    _curve = None
+
     def __init__(self, scale, strength=60):
-        cps = np.array(((0, 1), (30, 30), (70, 60), (100, 80)), dtype=np.int32)
-        self._curve = _bezier(cps)
         self._scale = scale * 0.01
         self._strength = strength * 0.01
+        if Vignette._curve is None:
+            cps = np.array(((0, 1), (30, 30), (70, 60), (100, 80)), dtype=np.int32)
+            Vignette._curve = _bezier(cps)
 
     def _process(self, img):
         shape = img.shape
@@ -322,7 +329,7 @@ class Vignette(BasicFilter):
                 dist = norm((i - center[0], j - center[1]))
                 if dist > end:
                     idx = round((dist - end) / size * 100)
-                    p[i, j] = self._curve[idx]
+                    p[i, j] = Vignette._curve[idx]
                     b[i, j] = True
 
         p = p[b] * 0.1 * self._strength
