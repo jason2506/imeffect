@@ -1,2 +1,9 @@
 .DS_Store
 *.pyc
+
+build
+dist
+
+*.c
+*.so
+*.o
