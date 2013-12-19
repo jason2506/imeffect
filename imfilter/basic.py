@@ -7,6 +7,7 @@ from scipy.signal import convolve2d
 from skimage.color import rgb2hsv, hsv2rgb
 
 from .base import BasicFilter
+from ._bezier import _bezier
 
 __all__ = ('FillColor',
            'Brightness',
@@ -28,51 +29,6 @@ __all__ = ('FillColor',
            'Vignette',
            'Sharpen',
            'GaussianBlur')
-
-
-def _lerp(a, b, t):
-    return a * (1 - t) + b * t
-
-
-def _fill_missing_values(values, end):
-    result = np.zeros(end + 1)
-    for i in xrange(end + 1):
-        if i in values:
-            result[i] = values[i]
-        else:
-            left = (i - 1, result[i - 1])
-            right = None
-            for j in xrange(i, end + 1):
-                if j in values:
-                    right = (j, values[j])
-                    break
-
-            if right is None:
-                result[i:end + 1] = result[i - 1]
-                break
-
-            offset = (right[1] - left[1]) / (right[0] - left[0]) * (i - left[0])
-            result[i] = left[1] + offset
-
-    return result.astype(np.int32)
-
-
-def _bezier(cps, lower=0, upper=255):
-    bezier = {}
-    for i in xrange(1000):
-        t = i * 0.001
-        p = np.copy(cps)
-        for j in xrange(p.shape[0] - 1, 0, -1):
-            for k in xrange(j):
-                p[k, 0] = _lerp(p[k, 0], p[k + 1, 0], t)
-                p[k, 1] = _lerp(p[k, 1], p[k + 1, 1], t)
-
-        idx = int(round(p[0, 0]))
-        val = min(max(p[0, 1], lower), upper)
-        bezier[idx] = round(val)
-
-    end = cps[-1][0]
-    return _fill_missing_values(bezier, end)
 
 
 class FillColor(BasicFilter):
@@ -249,7 +205,7 @@ class Curves(BasicFilter):
 
     def __init__(self, chans, cps):
         self._chans = chans
-        self._cps = np.array(cps, dtype=np.int32)
+        self._cps = np.array(cps, dtype=np.int)
         self._curve = None
 
     def _get_bezier(self):
@@ -329,7 +285,7 @@ class Vignette(BasicFilter):
         d = np.sqrt(dx ** 2 + dy ** 2)
 
         b = d > end
-        idx = np.round((d[b] - end) / size * 100).astype(np.int32)
+        idx = np.round((d[b] - end) / size * 100).astype(np.int)
 
         p = np.zeros(idx.shape, dtype=np.float)
         for i in xrange(101):

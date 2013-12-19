@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 
+import pyximport
+
 import numpy as np
 import matplotlib.pyplot as plt
+
+pyximport.install(setup_args={'include_dirs': np.get_include()})
 
 import imfilter.preset as imf
 
