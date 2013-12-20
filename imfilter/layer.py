@@ -2,11 +2,8 @@
 
 import numpy as np
 
-from .base import FilterBase
-
 __all__ = ('filter_as_layer',
-           'FilterLayer',
-           'LayeredFilter')
+           'FilterLayer')
 
 
 def filter_as_layer(f):
@@ -33,18 +30,3 @@ class FilterLayer(object):
         parent[parent > 1] = 1
         parent[parent < 0] = 0
         return parent
-
-
-class LayeredFilter(FilterBase):
-
-    _LAYERS = ()
-
-    def __init__(self):
-        self._layers = self._LAYERS
-
-    def __call__(self, img):
-        origin_img = np.copy(img)
-        for l in self._layers:
-            l(img, origin_img)
-
-        return img

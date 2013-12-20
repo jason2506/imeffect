@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from . import basic, blender
-from .layer import FilterLayer, LayeredFilter
+from .base import LayeredFilter
+from .layer import FilterLayer
 from .pool import FilterPool
 
 __all__ = ('Vintage',
