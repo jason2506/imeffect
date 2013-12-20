@@ -2,11 +2,11 @@ import numpy as np
 cimport numpy as np
 
 
-cdef _lerp(double a, double b, double t):
+cdef inline np.double_t _lerp(np.double_t a, np.double_t b, np.double_t t):
     return a * (1 - t) + b * t
 
 
-cdef _fill_missing_values(dict values, int end):
+cdef np.ndarray[np.int_t, ndim=1] _fill_missing_values(dict values, int end):
     cdef np.ndarray[np.double_t, ndim=1] result
     cdef unsigned int i, j
     cdef tuple left, right
@@ -34,17 +34,18 @@ cdef _fill_missing_values(dict values, int end):
     return result.astype(np.int)
 
 
-cpdef bezier(np.ndarray[np.int_t, ndim=2] cps, int lower=0, int upper=255):
+cpdef np.ndarray[np.int_t, ndim=1] bezier(np.ndarray[np.int_t, ndim=2] cps,
+                                          int lower=0, int upper=255):
     cdef dict result
     cdef unsigned int i, j, k
     cdef double t, val
     cdef int idx, end
-    cdef np.ndarray[np.int_t, ndim=2] p
+    cdef np.ndarray[np.double_t, ndim=2] p
 
     result = {}
     for i in xrange(1000):
         t = i * 0.001
-        p = np.copy(cps)
+        p = np.copy(cps).astype(np.float)
         for j in xrange(p.shape[0] - 1, 0, -1):
             for k in xrange(j):
                 p[k, 0] = _lerp(p[k, 0], p[k + 1, 0], t)
@@ -58,7 +59,7 @@ cpdef bezier(np.ndarray[np.int_t, ndim=2] cps, int lower=0, int upper=255):
     return _fill_missing_values(result, end)
 
 
-cpdef choose(np.ndarray a, np.ndarray choices, np.ndarray out):
+cpdef np.ndarray choose(np.ndarray a, np.ndarray choices, np.ndarray out):
     cdef int idx, val
     for idx, val in enumerate(choices):
         out[a == idx] = val
