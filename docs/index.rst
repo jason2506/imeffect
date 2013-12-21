@@ -1,6 +1,10 @@
 Welcome to imfilter
 =======================
 
+Image filter implementations written in Python (with `scikit-image <http://scikit-image.org/>`_).
+
+The algorithm of filters are ported from `CamanJS <http://camanjs.com/>`_.
+
 Quick Start
 -----------
 
@@ -26,6 +30,8 @@ Demonstration
 -------------
 
 .. image:: https://raw.github.com/jason2506/imfilter/master/result.png
+    :width: 100%
+    :alt: demonstration
 
 API Reference
 -------------
