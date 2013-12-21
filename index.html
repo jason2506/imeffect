@@ -1,0 +1,722 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to imfilter &mdash; imfilter 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="imfilter 0.1.0 documentation" href="#" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+  
+  
+  <div class=indexwrapper>
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="#">imfilter 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-imfilter">
+<h1>Welcome to imfilter<a class="headerlink" href="#welcome-to-imfilter" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">skimage</span> <span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imshow</span><span class="p">,</span> <span class="n">show</span>
+
+<span class="kn">import</span> <span class="nn">imfilter</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s">&#39;lena.png&#39;</span><span class="p">)</span>
+
+<span class="c"># applies the filter</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">Lomo</span><span class="p">()</span>
+<span class="n">f</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+
+<span class="c"># displays the filtered image</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="demonstration">
+<span id="demo"></span><h2>Demonstration<a class="headerlink" href="#demonstration" title="Permalink to this headline">¶</a></h2>
+<img alt="https://raw.github.com/jason2506/imfilter/master/result.png" src="https://raw.github.com/jason2506/imfilter/master/result.png" />
+</div>
+<div class="section" id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-imfilter.base">
+<span id="filter-base"></span><h3>Filter Base<a class="headerlink" href="#module-imfilter.base" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="imfilter.base.FilterBase">
+<em class="property">class </em><tt class="descclassname">imfilter.base.</tt><tt class="descname">FilterBase</tt><a class="headerlink" href="#imfilter.base.FilterBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract base class for filters.</p>
+<dl class="method">
+<dt id="imfilter.base.FilterBase.__call__">
+<tt class="descname">__call__</tt><big>(</big><em>img</em><big>)</big><a class="headerlink" href="#imfilter.base.FilterBase.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies filter effect to the given image (in place).</p>
+<p>Derived class should override this method to implement the filter
+effect.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This method will modify the passed image directly.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.base.BasicFilter">
+<em class="property">class </em><tt class="descclassname">imfilter.base.</tt><tt class="descname">BasicFilter</tt><a class="headerlink" href="#imfilter.base.BasicFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract base class for basic filters.</p>
+<p>The <tt class="xref py py-meth docutils literal"><span class="pre">__call__()</span></tt> method will restrict all pixel values between 0 to 1.</p>
+<dl class="method">
+<dt id="imfilter.base.BasicFilter._process">
+<tt class="descname">_process</tt><big>(</big><em>img</em><big>)</big><a class="headerlink" href="#imfilter.base.BasicFilter._process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies filter effect to the given image.</p>
+<p>Derived class should override this method (instead of <tt class="xref py py-meth docutils literal"><span class="pre">__call__()</span></tt>) to implement the filter
+effect.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.base.LayeredFilter">
+<em class="property">class </em><tt class="descclassname">imfilter.base.</tt><tt class="descname">LayeredFilter</tt><a class="headerlink" href="#imfilter.base.LayeredFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract base class for layered filters.</p>
+<dl class="attribute">
+<dt id="imfilter.base.LayeredFilter._LAYERS">
+<tt class="descname">_LAYERS</tt><em class="property"> = ()</em><a class="headerlink" href="#imfilter.base.LayeredFilter._LAYERS" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of filter layers.</p>
+<p>Derived class should override this attribute.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#imfilter.layer.filter_as_layer" title="imfilter.layer.filter_as_layer"><tt class="xref py py-func docutils literal"><span class="pre">filter_as_layer</span></tt></a>,
+<a class="reference internal" href="#imfilter.layer.FilterLayer" title="imfilter.layer.FilterLayer"><tt class="xref py py-class docutils literal"><span class="pre">FilterLayer</span></tt></a></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-imfilter.layer">
+<span id="filter-layer"></span><h3>Filter Layer<a class="headerlink" href="#module-imfilter.layer" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="imfilter.layer.filter_as_layer">
+<tt class="descclassname">imfilter.layer.</tt><tt class="descname">filter_as_layer</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#imfilter.layer.filter_as_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps the given filter as a pseudo-layer.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.layer.FilterLayer">
+<em class="property">class </em><tt class="descclassname">imfilter.layer.</tt><tt class="descname">FilterLayer</tt><big>(</big><em>opacity</em>, <em>blender</em>, <em>filters</em><big>)</big><a class="headerlink" href="#imfilter.layer.FilterLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter layer which can apply some filter effects to the given image,
+and then blended back into the parent layer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>opacity</strong> &#8211; opacity of this layer.</li>
+<li><strong>blender</strong> &#8211; blender function.</li>
+<li><strong>filters</strong> &#8211; a list of filters to be applied to the image.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#blenders"><em>Blenders</em></a></p>
+</div>
+<dl class="method">
+<dt id="imfilter.layer.FilterLayer.__call__">
+<tt class="descname">__call__</tt><big>(</big><em>parent</em>, <em>img</em><big>)</big><a class="headerlink" href="#imfilter.layer.FilterLayer.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies filter effects to the original image and blends it back to
+the parent layer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> &#8211; the parent layer.</li>
+<li><strong>img</strong> &#8211; the original image.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="blenders">
+<span id="id1"></span><h3>Blenders<a class="headerlink" href="#blenders" title="Permalink to this headline">¶</a></h3>
+<span class="target" id="module-imfilter.blender"></span><dl class="function">
+<dt id="imfilter.blender.normal">
+<tt class="descclassname">imfilter.blender.</tt><tt class="descname">normal</tt><big>(</big><em>parent</em>, <em>layer</em><big>)</big><a class="headerlink" href="#imfilter.blender.normal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imfilter.blender.multiply">
+<tt class="descclassname">imfilter.blender.</tt><tt class="descname">multiply</tt><big>(</big><em>parent</em>, <em>layer</em><big>)</big><a class="headerlink" href="#imfilter.blender.multiply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imfilter.blender.screen">
+<tt class="descclassname">imfilter.blender.</tt><tt class="descname">screen</tt><big>(</big><em>parent</em>, <em>layer</em><big>)</big><a class="headerlink" href="#imfilter.blender.screen" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imfilter.blender.overlay">
+<tt class="descclassname">imfilter.blender.</tt><tt class="descname">overlay</tt><big>(</big><em>parent</em>, <em>layer</em><big>)</big><a class="headerlink" href="#imfilter.blender.overlay" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imfilter.blender.difference">
+<tt class="descclassname">imfilter.blender.</tt><tt class="descname">difference</tt><big>(</big><em>parent</em>, <em>layer</em><big>)</big><a class="headerlink" href="#imfilter.blender.difference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imfilter.blender.addition">
+<tt class="descclassname">imfilter.blender.</tt><tt class="descname">addition</tt><big>(</big><em>parent</em>, <em>layer</em><big>)</big><a class="headerlink" href="#imfilter.blender.addition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imfilter.blender.exclusion">
+<tt class="descclassname">imfilter.blender.</tt><tt class="descname">exclusion</tt><big>(</big><em>parent</em>, <em>layer</em><big>)</big><a class="headerlink" href="#imfilter.blender.exclusion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imfilter.blender.softlight">
+<tt class="descclassname">imfilter.blender.</tt><tt class="descname">softlight</tt><big>(</big><em>parent</em>, <em>layer</em><big>)</big><a class="headerlink" href="#imfilter.blender.softlight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imfilter.blender.lighten">
+<tt class="descclassname">imfilter.blender.</tt><tt class="descname">lighten</tt><big>(</big><em>parent</em>, <em>layer</em><big>)</big><a class="headerlink" href="#imfilter.blender.lighten" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="imfilter.blender.darken">
+<tt class="descclassname">imfilter.blender.</tt><tt class="descname">darken</tt><big>(</big><em>parent</em>, <em>layer</em><big>)</big><a class="headerlink" href="#imfilter.blender.darken" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-imfilter.basic">
+<span id="basic-filters"></span><h3>Basic Filters<a class="headerlink" href="#module-imfilter.basic" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="imfilter.basic.FillColor">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">FillColor</tt><big>(</big><em>rgb</em><big>)</big><a class="headerlink" href="#imfilter.basic.FillColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fills the image with a single RGB color.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rgb</strong> &#8211; a (<em>R</em>, <em>G</em>, <em>B</em>) tuple.
+<em>R</em>, <em>G</em>, and <em>B</em> are integers range from 0 to 255.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Brightness">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Brightness</tt><big>(</big><em>adjust</em><big>)</big><a class="headerlink" href="#imfilter.basic.Brightness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the brightness of the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>adjust</strong> &#8211; float range from -100 to 100.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Saturation">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Saturation</tt><big>(</big><em>adjust</em><big>)</big><a class="headerlink" href="#imfilter.basic.Saturation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjusts the color saturation of the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>adjust</strong> &#8211; float range from -100 to 100.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Vibrance">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Vibrance</tt><big>(</big><em>adjust</em><big>)</big><a class="headerlink" href="#imfilter.basic.Vibrance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increases the intensity of the more muted colors and leaves the already
+well-saturated colors alone.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>adjust</strong> &#8211; float range from -100 to 100.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Greyscale">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Greyscale</tt><a class="headerlink" href="#imfilter.basic.Greyscale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes luminance of an RGB image.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Contrast">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Contrast</tt><big>(</big><em>adjust</em><big>)</big><a class="headerlink" href="#imfilter.basic.Contrast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increases or decreases the contrast of the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>adjust</strong> &#8211; float range from -100 to 100.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Hue">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Hue</tt><big>(</big><em>adjust</em><big>)</big><a class="headerlink" href="#imfilter.basic.Hue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjusts the hue of the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>adjust</strong> &#8211; float range from 0 to 100.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Colorize">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Colorize</tt><big>(</big><em>rgb</em>, <em>level</em><big>)</big><a class="headerlink" href="#imfilter.basic.Colorize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uniformly shifts the colors in an image towards the given color.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rgb</strong> &#8211; a (<em>R</em>, <em>G</em>, <em>B</em>) tuple.
+<em>R</em>, <em>G</em>, and <em>B</em> are integers range from 0 to 255.</li>
+<li><strong>level</strong> &#8211; float range from 0 to 100.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Invert">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Invert</tt><a class="headerlink" href="#imfilter.basic.Invert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inverts color in the image.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Sepia">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Sepia</tt><big>(</big><em>adjust</em><big>)</big><a class="headerlink" href="#imfilter.basic.Sepia" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies sepia effect to the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>adjust</strong> &#8211; float range from 0 to 100.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Gamma">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Gamma</tt><big>(</big><em>adjust</em><big>)</big><a class="headerlink" href="#imfilter.basic.Gamma" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjusts gamma value of the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>adjust</strong> &#8211; float range from 0 to infinity.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Noise">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Noise</tt><big>(</big><em>adjust</em><big>)</big><a class="headerlink" href="#imfilter.basic.Noise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds random noise to the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>adjust</strong> &#8211; float range from 0 to 100.
+The bigger the number the stronger the noise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Clip">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Clip</tt><big>(</big><em>adjust</em><big>)</big><a class="headerlink" href="#imfilter.basic.Clip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clips color falls outside of the specified range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>adjust</strong> &#8211; float range from 0 to 100.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Channels">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Channels</tt><big>(</big><em>red=0</em>, <em>green=0</em>, <em>blue=0</em><big>)</big><a class="headerlink" href="#imfilter.basic.Channels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modifies the intensity of any color channels individually.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>red</strong> &#8211; </li>
+<li><strong>green</strong> &#8211; </li>
+<li><strong>blue</strong> &#8211; float range from 0 to 100.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Curves">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Curves</tt><big>(</big><em>chans</em>, <em>cps</em><big>)</big><a class="headerlink" href="#imfilter.basic.Curves" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps one color value to another by using the Bezier curve equation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>chans</strong> &#8211; a list of indices represents the channels to modify with the
+filter.</li>
+<li><strong>cps</strong> &#8211; a list of (<em>X</em>, <em>Y</em>) tuple represents the point coordinates.
+<em>X</em> and <em>Y</em> are integers range from 0 to 255.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Exposure">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Exposure</tt><big>(</big><em>adjust</em><big>)</big><a class="headerlink" href="#imfilter.basic.Exposure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjusts the exposure of the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>adjust</strong> &#8211; float range from -100 to 100.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Posterize">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Posterize</tt><big>(</big><em>adjust</em><big>)</big><a class="headerlink" href="#imfilter.basic.Posterize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a continuous gradation of tone to several regions of fewer
+tones.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>adjust</strong> &#8211; float range from 0 to 100.
+The smaller the number the fewer the tones.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Vignette">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Vignette</tt><big>(</big><em>scale</em>, <em>strength=60</em><big>)</big><a class="headerlink" href="#imfilter.basic.Vignette" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies vignette effect to the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>scale</strong> &#8211; float range from 0 to 100.</li>
+<li><strong>strength</strong> &#8211; float range from 0 to 100.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.Sharpen">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">Sharpen</tt><big>(</big><em>adjust</em><big>)</big><a class="headerlink" href="#imfilter.basic.Sharpen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emphasizes the edges in the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>adjust</strong> &#8211; float range from -100 to 100.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="imfilter.basic.GaussianBlur">
+<em class="property">class </em><tt class="descclassname">imfilter.basic.</tt><tt class="descname">GaussianBlur</tt><big>(</big><em>radius</em><big>)</big><a class="headerlink" href="#imfilter.basic.GaussianBlur" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies Gaussian blur to the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>radius</strong> &#8211; float range from 0 to infinity.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-imfilter.preset">
+<span id="pre-defined-filters"></span><h3>Pre-defined Filters<a class="headerlink" href="#module-imfilter.preset" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="imfilter.preset.Vintage">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">Vintage</tt><big>(</big><em>vignette=True</em><big>)</big><a class="headerlink" href="#imfilter.preset.Vintage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.Lomo">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">Lomo</tt><big>(</big><em>vignette=True</em><big>)</big><a class="headerlink" href="#imfilter.preset.Lomo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.Clarity">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">Clarity</tt><big>(</big><em>grey=False</em><big>)</big><a class="headerlink" href="#imfilter.preset.Clarity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.SinCity">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">SinCity</tt><a class="headerlink" href="#imfilter.preset.SinCity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.Sunrise">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">Sunrise</tt><a class="headerlink" href="#imfilter.preset.Sunrise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.CrossProcess">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">CrossProcess</tt><a class="headerlink" href="#imfilter.preset.CrossProcess" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.OrangePeel">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">OrangePeel</tt><a class="headerlink" href="#imfilter.preset.OrangePeel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.Love">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">Love</tt><a class="headerlink" href="#imfilter.preset.Love" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.Grungy">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">Grungy</tt><a class="headerlink" href="#imfilter.preset.Grungy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.Jarques">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">Jarques</tt><a class="headerlink" href="#imfilter.preset.Jarques" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.Pinhole">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">Pinhole</tt><a class="headerlink" href="#imfilter.preset.Pinhole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.OldBoot">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">OldBoot</tt><a class="headerlink" href="#imfilter.preset.OldBoot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.GlowingSun">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">GlowingSun</tt><big>(</big><em>vignette=True</em><big>)</big><a class="headerlink" href="#imfilter.preset.GlowingSun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.HazyDays">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">HazyDays</tt><a class="headerlink" href="#imfilter.preset.HazyDays" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.HerMajesty">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">HerMajesty</tt><a class="headerlink" href="#imfilter.preset.HerMajesty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.Nostalgia">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">Nostalgia</tt><a class="headerlink" href="#imfilter.preset.Nostalgia" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.Hemingway">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">Hemingway</tt><a class="headerlink" href="#imfilter.preset.Hemingway" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="imfilter.preset.Concentrate">
+<em class="property">class </em><tt class="descclassname">imfilter.preset.</tt><tt class="descname">Concentrate</tt><a class="headerlink" href="#imfilter.preset.Concentrate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#demo"><em>Demonstration</em></a></p>
+</div>
+</div>
+<div class="section" id="filter-pool">
+<h3>Filter Pool<a class="headerlink" href="#filter-pool" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="imfilter.pool.FilterPool">
+<em class="property">class </em><tt class="descclassname">imfilter.pool.</tt><tt class="descname">FilterPool</tt><a class="headerlink" href="#imfilter.pool.FilterPool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter pool which can hold a collection of filters.</p>
+<dl class="method">
+<dt id="imfilter.pool.FilterPool.register">
+<tt class="descname">register</tt><big>(</big><em>cls</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#imfilter.pool.FilterPool.register" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registers the filter with class type and its arguments.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cls</strong> &#8211; the class of registered filter.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="imfilter.pool.FilterPool.register_as_layer">
+<tt class="descname">register_as_layer</tt><big>(</big><em>cls</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#imfilter.pool.FilterPool.register_as_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Registers the filter and returns a pseudo-layer for the filter.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#imfilter.pool.FilterPool.register" title="imfilter.pool.FilterPool.register"><tt class="xref py py-meth docutils literal"><span class="pre">FilterPool.register</span></tt></a>,
+<a class="reference internal" href="#imfilter.layer.filter_as_layer" title="imfilter.layer.filter_as_layer"><tt class="xref py py-func docutils literal"><span class="pre">filter_as_layer</span></tt></a></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+<a href="https://github.com/jason2506/imfilter"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to imfilter</a><ul>
+<li><a class="reference internal" href="#quick-start">Quick Start</a></li>
+<li><a class="reference internal" href="#demonstration">Demonstration</a></li>
+<li><a class="reference internal" href="#api-reference">API Reference</a><ul>
+<li><a class="reference internal" href="#module-imfilter.base">Filter Base</a></li>
+<li><a class="reference internal" href="#module-imfilter.layer">Filter Layer</a></li>
+<li><a class="reference internal" href="#blenders">Blenders</a></li>
+<li><a class="reference internal" href="#module-imfilter.basic">Basic Filters</a></li>
+<li><a class="reference internal" href="#module-imfilter.preset">Pre-defined Filters</a></li>
+<li><a class="reference internal" href="#filter-pool">Filter Pool</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2013, Chi-En Wu.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  
+  </div>
+  
+  </body>
+</html>
