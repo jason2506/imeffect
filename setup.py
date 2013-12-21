@@ -16,7 +16,7 @@ import numpy
 setup(
     name='imfilter',
     version='0.1.0',
-    url='https://github.com/jason2506/imfilter',
+    url='http://jason2506.github.io/imfilter/',
     license='3-Clause BSD License',
     author='Chi-En Wu',
     author_email='',
