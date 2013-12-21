@@ -3,6 +3,7 @@
 
 build
 dist
+docs/_build
 
 *.c
 *.so
