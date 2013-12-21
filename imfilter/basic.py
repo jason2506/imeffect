@@ -32,6 +32,11 @@ __all__ = ('FillColor',
 
 
 class FillColor(BasicFilter):
+    """Fills the image with a single RGB color.
+
+    :param `rgb`: a (*R*, *G*, *B*) tuple.
+                  *R*, *G*, and *B* are integers range from 0 to 255.
+    """
 
     def __init__(self, rgb):
         self._rgb = np.array(rgb).reshape((1, 1, 3)) / 255.0
@@ -42,6 +47,10 @@ class FillColor(BasicFilter):
 
 
 class Brightness(BasicFilter):
+    """Changes the brightness of the image.
+
+    :param adjust: float range from -100 to 100.
+    """
 
     def __init__(self, adjust):
         self._adjust = adjust * 0.01
@@ -52,6 +61,10 @@ class Brightness(BasicFilter):
 
 
 class Saturation(BasicFilter):
+    """Adjusts the color saturation of the image.
+
+    :param adjust: float range from -100 to 100.
+    """
 
     def __init__(self, adjust):
         self._adjust = adjust * -0.01
@@ -63,6 +76,11 @@ class Saturation(BasicFilter):
 
 
 class Vibrance(BasicFilter):
+    """Increases the intensity of the more muted colors and leaves the already
+    well-saturated colors alone.
+
+    :param adjust: float range from -100 to 100.
+    """
 
     def __init__(self, adjust):
         self._adjust = adjust * -0.01
@@ -76,6 +94,7 @@ class Vibrance(BasicFilter):
 
 
 class Greyscale(BasicFilter):
+    """Computes luminance of an RGB image."""
 
     def _process(self, img):
         r = img[:, :, 0]
@@ -89,6 +108,10 @@ class Greyscale(BasicFilter):
 
 
 class Contrast(BasicFilter):
+    """Increases or decreases the contrast of the image.
+
+    :param adjust: float range from -100 to 100.
+    """
 
     def __init__(self, adjust):
         self._adjust = ((adjust + 100) * 0.01) ** 2
@@ -100,6 +123,10 @@ class Contrast(BasicFilter):
 
 
 class Hue(BasicFilter):
+    """Adjusts the hue of the image.
+
+    :param adjust: float range from 0 to 100.
+    """
 
     def __init__(self, adjust):
         self._adjust = adjust * 0.01
@@ -114,6 +141,12 @@ class Hue(BasicFilter):
 
 
 class Colorize(BasicFilter):
+    """Uniformly shifts the colors in an image towards the given color.
+
+    :param rgb: a (*R*, *G*, *B*) tuple.
+                *R*, *G*, and *B* are integers range from 0 to 255.
+    :param level: float range from 0 to 100.
+    """
 
     def __init__(self, rgb, level):
         self._offset = np.array(rgb).reshape((1, 1, 3)) / 255.0
@@ -125,6 +158,7 @@ class Colorize(BasicFilter):
 
 
 class Invert(BasicFilter):
+    """Inverts color in the image."""
 
     def _process(self, img):
         img -= 1
@@ -133,6 +167,10 @@ class Invert(BasicFilter):
 
 
 class Sepia(BasicFilter):
+    """Applies sepia effect to the image.
+
+    :param adjust: float range from 0 to 100.
+    """
 
     def __init__(self, adjust):
         adjust = adjust * 0.01
@@ -154,6 +192,10 @@ class Sepia(BasicFilter):
 
 
 class Gamma(BasicFilter):
+    """Adjusts gamma value of the image.
+
+    :param adjust: float range from 0 to infinity.
+    """
 
     def __init__(self, adjust):
         self._adjust = adjust
@@ -164,6 +206,11 @@ class Gamma(BasicFilter):
 
 
 class Noise(BasicFilter):
+    """Adds random noise to the image.
+
+    :param adjust: float range from 0 to 100.
+                   The bigger the number the stronger the noise.
+    """
 
     def __init__(self, adjust):
         self._adjust = abs(adjust) * 0.01
@@ -175,6 +222,10 @@ class Noise(BasicFilter):
 
 
 class Clip(BasicFilter):
+    """Clips color falls outside of the specified range.
+
+    :param adjust: float range from 0 to 100.
+    """
 
     def __init__(self, adjust):
         self._adjust = abs(adjust) * 0.01
@@ -186,6 +237,12 @@ class Clip(BasicFilter):
 
 
 class Channels(BasicFilter):
+    """Modifies the intensity of any color channels individually.
+
+    :param red:
+    :param green:
+    :param blue: float range from 0 to 100.
+    """
 
     def __init__(self, red=0, green=0, blue=0):
         self._adjust = np.array([red, green, blue]) * 0.01
@@ -202,6 +259,13 @@ class Channels(BasicFilter):
 
 
 class Curves(BasicFilter):
+    """Maps one color value to another by using the Bezier curve equation.
+
+    :param chans: a list of indices represents the channels to modify with the
+                  filter.
+    :param cps: a list of (*X*, *Y*) tuple represents the point coordinates.
+                *X* and *Y* are integers range from 0 to 255.
+    """
 
     def __init__(self, chans, cps):
         self._chans = chans
@@ -233,6 +297,10 @@ class Curves(BasicFilter):
 
 
 class Exposure(Curves):
+    """Adjusts the exposure of the image.
+
+    :param adjust: float range from -100 to 100.
+    """
 
     def __init__(self, adjust):
         p = abs(adjust) * 0.01
@@ -249,6 +317,12 @@ class Exposure(Curves):
 
 
 class Posterize(BasicFilter):
+    """Converts a continuous gradation of tone to several regions of fewer
+    tones.
+
+    :param adjust: float range from 0 to 100.
+                   The smaller the number the fewer the tones.
+    """
 
     def __init__(self, adjust):
         self._adjust = float(adjust)
@@ -259,6 +333,11 @@ class Posterize(BasicFilter):
 
 
 class Vignette(BasicFilter):
+    """Applies vignette effect to the image.
+
+    :param scale: float range from 0 to 100.
+    :param strength: float range from 0 to 100.
+    """
 
     _curve = None
 
@@ -299,6 +378,10 @@ class Vignette(BasicFilter):
 
 
 class Sharpen(BasicFilter):
+    """Emphasizes the edges in the image.
+
+    :param adjust: float range from -100 to 100.
+    """
 
     def __init__(self, adjust):
         adjust = adjust * 0.01
@@ -314,6 +397,10 @@ class Sharpen(BasicFilter):
 
 
 class GaussianBlur(BasicFilter):
+    """Applies Gaussian blur to the image.
+
+    :param radius: float range from 0 to infinity.
+    """
 
     def __init__(self, radius):
         self._sigma = radius / 3.0
