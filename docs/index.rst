@@ -10,7 +10,7 @@ Quick Start
 
 .. code-block:: python
 
-    from skimage import imread, imshow, show
+    from skimage.io import imread, imshow, show
 
     import imfilter
 
