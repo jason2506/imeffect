@@ -31,7 +31,7 @@ cdef np.ndarray[np.int_t, ndim=1] _fill_missing_values(dict values, int end):
             offset = (right[1] - left[1]) / (right[0] - left[0]) * (i - left[0])
             result[i] = left[1] + offset
 
-    return np.round(result).astype(np.int)
+    return result.astype(np.int)
 
 
 cpdef np.ndarray[np.int_t, ndim=1] bezier(np.ndarray[np.int_t, ndim=2] cps,
@@ -52,10 +52,8 @@ cpdef np.ndarray[np.int_t, ndim=1] bezier(np.ndarray[np.int_t, ndim=2] cps,
                 p[k, 1] = _lerp(p[k, 1], p[k + 1, 1], t)
 
         idx = int(round(p[0, 0]))
-        result[idx] = p[0, 1]
-
-    result[result < lower] = lower
-    result[result > upper] = upper
+        val = min(max(p[0, 1], lower), upper)
+        result[idx] = round(val)
 
     end = cps[-1][0]
     return _fill_missing_values(result, end)
