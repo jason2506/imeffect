@@ -1,4 +1,4 @@
-Welcome to imfilter
+Welcome to imeffect
 =======================
 
 Image filter implementations written in Python (with `scikit-image <http://scikit-image.org/>`_).
@@ -12,7 +12,7 @@ Quick Start
 
     from skimage.io import imread, imshow, show
 
-    import imfilter
+    import imeffect
 
     img = imread('lena.png')
 
@@ -29,7 +29,7 @@ Quick Start
 Demonstration
 -------------
 
-.. image:: https://raw.github.com/jason2506/imfilter/master/result.png
+.. image:: https://raw.github.com/jason2506/imeffect/master/result.png
     :width: 100%
     :alt: demonstration
 
@@ -39,7 +39,7 @@ API Reference
 Filter Base
 ```````````
 
-.. automodule:: imfilter.base
+.. automodule:: imeffect.base
 
     .. autoclass:: FilterBase
         :members:
@@ -62,7 +62,7 @@ Filter Base
 Filter Layer
 ````````````
 
-.. automodule:: imfilter.layer
+.. automodule:: imeffect.layer
 
     .. autofunction:: filter_as_layer
 
@@ -77,21 +77,21 @@ Filter Layer
 Blenders
 ````````
 
-.. automodule:: imfilter.blender
+.. automodule:: imeffect.blender
     :members:
     :undoc-members:
 
 Basic Filters
 `````````````
 
-.. automodule:: imfilter.basic
+.. automodule:: imeffect.basic
     :members:
     :undoc-members:
 
 Pre-defined Filters
 ```````````````````
 
-.. automodule:: imfilter.preset
+.. automodule:: imeffect.preset
     :members:
     :undoc-members:
 
@@ -100,6 +100,6 @@ Pre-defined Filters
 Filter Pool
 ```````````
 
-.. autoclass:: imfilter.pool.FilterPool
+.. autoclass:: imeffect.pool.FilterPool
     :members:
     :undoc-members:
