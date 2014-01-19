@@ -46,8 +46,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'imfilter'
-copyright = u'2013, Chi-En Wu'
+project = u'imeffect'
+copyright = u'2013-2014 Chi-En Wu'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -174,7 +174,7 @@ html_show_sphinx = False
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'imfilterdoc'
+htmlhelp_basename = 'imeffectdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -193,7 +193,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'imfilter.tex', u'imfilter Documentation',
+  ('index', 'imeffect.tex', u'imeffect Documentation',
    u'Chi-En Wu', 'manual'),
 ]
 
@@ -223,7 +223,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'imfilter', u'imfilter Documentation',
+    ('index', 'imeffect', u'imeffect Documentation',
      [u'Chi-En Wu'], 1)
 ]
 
@@ -237,8 +237,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'imfilter', u'imfilter Documentation',
-   u'Chi-En Wu', 'imfilter', 'One line description of project.',
+  ('index', 'imeffect', u'imeffect Documentation',
+   u'Chi-En Wu', 'imeffect', 'One line description of project.',
    'Miscellaneous'),
 ]
 

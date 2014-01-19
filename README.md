@@ -1,4 +1,4 @@
-# imfilter
+# imeffect
 
 Image filter implementations written in Python (with [scikit-image](http://scikit-image.org/)).
 

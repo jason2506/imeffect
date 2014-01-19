@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-imfilter
+imeffect
 --------
 
 Image filter implementations written in Python (with scikit-image).
@@ -14,21 +14,21 @@ from Cython.Distutils import build_ext
 import numpy
 
 setup(
-    name='imfilter',
+    name='imeffect',
     version='0.1.0',
-    url='http://jason2506.github.io/imfilter/',
-    license='3-Clause BSD License',
+    url='http://jason2506.github.io/imeffect/',
+    license='The BSD 3-Clause License',
     author='Chi-En Wu',
     author_email='',
     description='Image filter implementations written in Python (with scikit-image).',
     long_description=__doc__,
-    packages=['imfilter'],
+    packages=['imeffect'],
     zip_safe=False,
     platforms='any',
     install_requires=['scikit-image', 'scipy', 'numpy'],
     cmdclass={'build_ext': build_ext},
     ext_modules=[
-        Extension('imfilter._util', ['imfilter/_util.pyx'],
+        Extension('imeffect._util', ['imeffect/_util.pyx'],
                   include_dirs=[numpy.get_include()])],
     classifiers=[
         'Intended Audience :: Developers',
