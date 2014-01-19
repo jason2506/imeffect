@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 
+#################################################
+# preset.py
+# imeffect
+#
+# Copyright (c) 2013-2014, Chi-En Wu
+# Distributed under The BSD 3-Clause License
+#################################################
+
 from . import basic, blender
 from .base import LayeredFilter
 from .layer import FilterLayer

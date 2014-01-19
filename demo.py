@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 
+#################################################
+# demo.py
+# imeffect
+#
+# Copyright (c) 2013-2014, Chi-En Wu
+# Distributed under The BSD 3-Clause License
+#################################################
+
 import pyximport
 
 import numpy as np

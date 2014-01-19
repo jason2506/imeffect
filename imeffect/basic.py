@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 
+#################################################
+# basic.py
+# imeffect
+#
+# Copyright (c) 2013-2014, Chi-En Wu
+# Distributed under The BSD 3-Clause License
+#################################################
+
 import numpy as np
 from numpy.linalg import norm
 from scipy.ndimage import gaussian_filter

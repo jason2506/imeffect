@@ -1,3 +1,11 @@
+#################################################
+# _util.pyx
+# imeffect
+#
+# Copyright (c) 2013-2014, Chi-En Wu
+# Distributed under The BSD 3-Clause License
+#################################################
+
 import numpy as np
 cimport numpy as np
 
